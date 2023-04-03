@@ -1,5 +1,5 @@
 library(sparklyr)
-library(dbplot)
+library(dplyr)
 
 # Connect to Spark
 master <- paste(Sys.getenv("SPARK_MASTER_HOST"), Sys.getenv("SPARK_MASTER_PORT"), sep = ":")
@@ -12,10 +12,15 @@ project_name <- Sys.getenv("DOMINO_PROJECT_NAME")
 data_file_location <- paste("file:///mnt/data/", project_name, "/diabetes.csv", sep = "")
 # Read into Spark
 tbl_diabetes <- spark_read_csv(sc, name = "diabetes", path=data_file_location)
-# Show the first 6 entries
-head(tbl_diabetes)
 
-dbplot_histogram(tbl_diabetes, Age)
+# Count the number of rows
+count(tbl_diabetes)
+
+# Sample and plot Age vs BMI
+select(tbl_diabetes, Age, BMI) %>%
+  sample_n(200) %>%
+  collect() %>%
+  plot()
 
 # Disconnect from Spark
 spark_disconnect(sc)
