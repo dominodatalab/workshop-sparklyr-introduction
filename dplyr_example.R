@@ -22,5 +22,22 @@ select(tbl_diabetes, Age, BMI) %>%
   collect() %>%
   plot()
 
+# Sample 20 individuals per pregnancy group and calculate
+# the mean BMI & glucose per group.
+preg_bmi_glucose <- tbl_diabetes %>% 
+                      group_by(Pregnancies) %>% 
+                      slice_sample(n = 20) %>%
+                      summarise(
+                        Count = n(), 
+                        BMI = mean(BMI, na.rm = TRUE),
+                        Glucose = mean(Glucose, na.rm = TRUE)) %>%
+                      arrange(Pregnancies)
+
+print(preg_bmi_glucose, n=20)
+
+# We can peek into the SQL statement
+preg_bmi_glucose %>%
+  show_query()
+
 # Disconnect from Spark
 spark_disconnect(sc)
