@@ -1,4 +1,13 @@
-# workshop-sparklyr
+# Introduction to Spark (via sparklyr)
+
+This repository contains materials used for the Domino Field Data Science "Introduction to Spark (via sparklyr)" module.
+
+* *hello_world.R* - A simple "Hello World" type of script, which connects to on-demand Spark in Domino and loads an R data.frame into Spark
+* *csv_example.R* - Reading a tabular data file into a Spark DataFrame 
+* *sql_example.R* - Running SQL queries against Spark tables via DBI
+* *dplyr_example.R* - Using dplyr with Spark
+* *ft_example.R* - Feature Transformations example
+* *ml_example.R* - Simple logistic regression model fitting and scoring example
 
 ### Setup instructions
 
